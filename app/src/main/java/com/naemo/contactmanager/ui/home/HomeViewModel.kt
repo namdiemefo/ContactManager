@@ -1,4 +1,8 @@
 package com.naemo.contactmanager.ui.home
 
-class HomeViewModel {
+import com.naemo.contactmanager.ui.base.BaseViewModel
+
+class HomeViewModel : BaseViewModel<HomeNavigator>() {
+
+
 }
