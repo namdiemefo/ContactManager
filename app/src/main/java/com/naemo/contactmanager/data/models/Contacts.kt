@@ -1,5 +1,5 @@
 package com.naemo.contactmanager.data.models
 
-class Contacts {
+data class Contacts(val name: String? = null) {
 
 }
