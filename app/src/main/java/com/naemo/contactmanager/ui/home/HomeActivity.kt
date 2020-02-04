@@ -3,22 +3,26 @@ package com.naemo.contactmanager.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.naemo.contactmanager.BR
 import com.naemo.contactmanager.R
 import com.naemo.contactmanager.databinding.ActivityHomeBinding
+import com.naemo.contactmanager.ui.adapters.HomeAdapter
 import com.naemo.contactmanager.ui.add.AddActivity
 import com.naemo.contactmanager.ui.base.BaseActivity
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
 
+    var mAdapter: RecyclerView.Adapter<*>? = null
+    var layoutmanager: LinearLayoutManager? = null
+
     override fun addContact() {
         val intent = Intent(this, AddActivity::class.java)
         startActivity(intent)
     }
-
-
 
     var homeViewModel: HomeViewModel? = null
     @Inject set
@@ -32,8 +36,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        //setContentView(R.layout.activity_home)
         doBinding()
+
+        mAdapter = HomeAdapter()
+        layoutmanager = LinearLayoutManager(this)
+        mBinder?.homeRecyclerView?.layoutManager = layoutmanager
+        mBinder?.homeRecyclerView?.adapter = mAdapter
     }
 
     private fun doBinding() {

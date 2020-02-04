@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import dagger.android.AndroidInjection
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity() {
 
@@ -44,8 +47,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     abstract fun getViewModel(): V?
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
+    @LayoutRes abstract fun getLayoutId(): Int
 
     fun performDependencyInjection() {
         AndroidInjection.inject(this)
