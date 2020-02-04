@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">ContactManager</string>
     <string name="bill_kayden">Bill Kayden</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="phone_number_hint">Phone Number</string>
+    <string name="birthday_hint">Birthday</string>
+    <string name="address_hint">Address</string>
+    <string name="zip_code_hint">Zip code</string>
 </resources>
