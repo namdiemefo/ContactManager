@@ -13,6 +13,7 @@ import com.naemo.contactmanager.db.models.Contacts
 import com.naemo.contactmanager.ui.adapters.ContactAdapter
 import com.naemo.contactmanager.ui.add.AddActivity
 import com.naemo.contactmanager.ui.base.BaseActivity
+import com.naemo.contactmanager.ui.card.CardActivity
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
