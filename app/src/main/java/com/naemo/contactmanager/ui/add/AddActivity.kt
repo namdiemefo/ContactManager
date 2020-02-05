@@ -17,6 +17,7 @@ import com.naemo.contactmanager.db.models.Contacts
 import com.naemo.contactmanager.ui.adapters.ContactAdapter
 import com.naemo.contactmanager.ui.base.BaseActivity
 import com.naemo.contactmanager.ui.helpers.DatePickerFragment
+import com.naemo.contactmanager.ui.home.HomeActivity
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -127,6 +128,24 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
     }
 
     override fun saveContact() {
+        val contact = Contacts()
+        contact.conctactFirstName = mBinder?.firstName?.text.toString()
+        contact.contactLastName = mBinder?.lastName?.text.toString()
+        contact.contactPhoneNumber = mBinder?.phoneNumber?.text.toString()
+        contact.contactDob = mBinder?.birthDate?.text.toString()
+        contact.contactAddress = mBinder?.address?.text.toString()
+        contact.contactZipcode = mBinder?.zipCode?.text.toString()
+        HomeActivity.dbhelper.addContact(this, contact)
+        clearFields()
+        mBinder?.firstName?.requestFocus()
+    }
+
+    private fun clearFields() {
+        mBinder?.firstName?.text?.clear()
+        mBinder?.lastName?.text?.clear()
+        mBinder?.phoneNumber?.text?.clear()
+        mBinder?.address?.text?.clear()
+        mBinder?.zipCode?.text?.clear()
 
     }
 

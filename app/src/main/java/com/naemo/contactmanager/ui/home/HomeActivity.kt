@@ -82,5 +82,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         return mLayoutId
     }
 
+    override fun onResume() {
+        viewContacts()
+        super.onResume()
+    }
+
 
 }

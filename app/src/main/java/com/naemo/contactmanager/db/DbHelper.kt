@@ -1,13 +1,19 @@
 package com.naemo.contactmanager.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.snackbar.Snackbar
 import com.naemo.contactmanager.db.models.Contacts
+import java.lang.Exception
 
 class DbHelper(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) :
 SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
+
 
     companion object {
         private val DATABASE_NAME = "MyData.db"
@@ -70,5 +76,23 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         cursor.close()
         db.close()
         return contacts
+    }
+
+    fun addContact(context: Context, contacts: Contacts) {
+        val values = ContentValues()
+        values.put(COLUMN_CONTACT_FIRSTNAME, contacts.conctactFirstName)
+        values.put(COLUMN_CONTACT_LASTNAME, contacts.contactLastName)
+        values.put(COLUMN_CONTACT_PHONENUMBER, contacts.contactPhoneNumber)
+        values.put(COLUMN_CONTACT_DOB, contacts.contactDob)
+        values.put(COLUMN_CONTACT_ADDRESS, contacts.contactAddress)
+        values.put(COLUMN_CONTACT_ZIPCODE, contacts.contactZipcode)
+        val db = this.writableDatabase
+        try {
+            db.insert(CONTACTS_TABLE_NAME, null, values)
+            Toast.makeText(context, "customer added", Toast.LENGTH_SHORT).show() //use snackbar
+        } catch (e: Exception) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        }
+        db.close()
     }
 }
