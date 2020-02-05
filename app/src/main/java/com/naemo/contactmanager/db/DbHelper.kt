@@ -54,7 +54,9 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
 
         if (cursor.count == 0)
             Toast.makeText(context, "No records found", Toast.LENGTH_SHORT).show() else
-        { while (cursor.moveToNext()) {
+        {
+            cursor.moveToFirst()
+            while (!cursor.isAfterLast) {
                 val contact = Contacts()
                 contact.contactId = cursor.getInt(cursor.getColumnIndex(COLUMN_CONTACT_ID))
                 contact.conctactFirstName = cursor.getString(cursor.getColumnIndex(
@@ -70,6 +72,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
                 contact.contactZipcode = cursor.getString(cursor.getColumnIndex(
                     COLUMN_CONTACT_ZIPCODE))
                 contacts.add(contact)
+                cursor.moveToNext()
             }
             Toast.makeText(context, "${cursor.count} records found", Toast.LENGTH_SHORT).show()
         }
