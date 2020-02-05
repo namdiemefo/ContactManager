@@ -1,4 +1,6 @@
 package com.naemo.contactmanager.ui.add
 
-class AddViewModel {
+import com.naemo.contactmanager.ui.base.BaseViewModel
+
+class AddViewModel : BaseViewModel<AddNavigator>() {
 }

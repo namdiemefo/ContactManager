@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.naemo.contactmanager.R
-import com.naemo.contactmanager.data.models.Contacts
 import kotlinx.android.synthetic.main.home_recycler.view.*
 
 

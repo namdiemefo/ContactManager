@@ -28,6 +28,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
@@ -59,6 +61,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
@@ -69,11 +72,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/dob_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/birthday_hint">
 
             <TextView
+                android:id="@+id/birth_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{(view) -> navigator.datePick()}"
@@ -81,6 +87,7 @@
                 android:paddingTop="10dp"
                 android:drawableEnd="@drawable/ic_date"
                 android:drawablePadding="5dp"
+                android:imeOptions="actionNext"
                 android:paddingEnd="20dp"
                 android:paddingStart="4dp"
                 android:hint="@string/birthday_hint" />
@@ -96,11 +103,12 @@
             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
@@ -116,9 +124,10 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/zip_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:lines="1"
                 android:inputType="number"
                 android:textSize="15sp"
