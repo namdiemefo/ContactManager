@@ -8,15 +8,18 @@ import android.os.PersistableBundle
 import android.widget.DatePicker
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.naemo.contactmanager.BR
 import com.naemo.contactmanager.R
 import com.naemo.contactmanager.databinding.ActivityAddBinding
+import com.naemo.contactmanager.db.DbHelper
+import com.naemo.contactmanager.db.models.Contacts
+import com.naemo.contactmanager.ui.adapters.ContactAdapter
 import com.naemo.contactmanager.ui.base.BaseActivity
 import com.naemo.contactmanager.ui.helpers.DatePickerFragment
 import java.util.*
 import javax.inject.Inject
-
-
+import kotlin.collections.ArrayList
 
 
 class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigator, DatePickerDialog.OnDateSetListener {
@@ -28,11 +31,11 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
     @Inject set
 
     var mBinder: ActivityAddBinding? = null
-
     private var mDatePickerDialog: DatePickerDialog? = null
     private var listener: DatePickerDialog.OnDateSetListener? = null
-
     var dob: TextView? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
