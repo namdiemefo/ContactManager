@@ -7,12 +7,29 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import com.naemo.contactmanager.R
+import kotlinx.android.synthetic.main.activity_card.*
 
-class CardActivity : AppCompatActivity() {
+ class CardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card)
+        initializeViews()
+    }
+
+    private fun initializeViews() {
+        val intent = intent
+        val name = intent.getStringExtra("name")
+        val phone = intent.getStringExtra("phone")
+        val dob = intent.getStringExtra("dob")
+        val address = intent.getStringExtra("address")
+        val zipcode = intent.getStringExtra("zipcode")
+
+        full_name.text = name
+        full_number.text = phone
+        full_dob.text = dob
+        full_address.text = address
+        full_zip_code.text = zipcode
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

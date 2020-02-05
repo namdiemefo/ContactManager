@@ -16,10 +16,17 @@ import com.naemo.contactmanager.ui.base.BaseActivity
 import com.naemo.contactmanager.ui.card.CardActivity
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator, ContactAdapter.ItemClickListener {
 
-    //var mAdapter: RecyclerView.Adapter<*>? = null
-   // var layoutmanager: LinearLayoutManager? = null
+    override fun onItemClicked(name: String, phone: String, dob: String, address: String, zipcode: String) {
+        val intent = Intent(this@HomeActivity, CardActivity::class.java)
+        intent.putExtra("name", name)
+        intent.putExtra("phone", phone)
+        intent.putExtra("dob", dob)
+        intent.putExtra("address", address)
+        intent.putExtra("zipcode", zipcode)
+        this@HomeActivity.startActivity(intent)
+    }
 
     override fun addContact() {
         val intent = Intent(this, AddActivity::class.java)
@@ -44,15 +51,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         doBinding()
         dbhelper = DbHelper(this, null, null, 1)
         viewContacts()
-        /*mAdapter = ContactAdapter()
-        layoutmanager = LinearLayoutManager(this)
-        mBinder?.homeRecyclerView?.layoutManager = layoutmanager
-        mBinder?.homeRecyclerView?.adapter = mAdapter*/
     }
 
     private fun viewContacts() {
         val contactList: ArrayList<Contacts> = dbhelper.getContacts(this)
-        val adapter = ContactAdapter(this, contactList)
+        val adapter = ContactAdapter(this, contactList, this)
         val rv: RecyclerView = mBinder!!.homeRecyclerView
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv.adapter = adapter
