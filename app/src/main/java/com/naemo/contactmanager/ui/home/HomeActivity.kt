@@ -18,8 +18,9 @@ import javax.inject.Inject
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator, ContactAdapter.ItemClickListener {
 
-    override fun onItemClicked(name: String, phone: String, dob: String, address: String, zipcode: String) {
+    override fun onItemClicked(id: Int, name: String, phone: String, dob: String, address: String, zipcode: String) {
         val intent = Intent(this@HomeActivity, CardActivity::class.java)
+        intent.putExtra("id", id)
         intent.putExtra("name", name)
         intent.putExtra("phone", phone)
         intent.putExtra("dob", dob)
@@ -89,6 +90,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     override fun onResume() {
         viewContacts()
         super.onResume()
+    }
+
+    override fun onRestart() {
+        viewContacts()
+        super.onRestart()
     }
 
 

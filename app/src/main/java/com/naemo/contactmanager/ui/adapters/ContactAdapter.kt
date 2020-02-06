@@ -29,6 +29,7 @@ class ContactAdapter(context: Context, private val contacts: ArrayList<Contacts>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact: Contacts = contacts[position]
+        val id = contact.contactId
         val firstName = contact.conctactFirstName
         val lastName = contact.contactLastName
         val phoneNumber =  contact.contactPhoneNumber
@@ -36,7 +37,7 @@ class ContactAdapter(context: Context, private val contacts: ArrayList<Contacts>
         val address = contact.contactAddress
         val zipcode = contact.contactZipcode
         holder.name.text = firstName.plus(" ").plus(lastName)
-        holder.view.setOnClickListener {itemClickListener.onItemClicked(firstName.plus(" ").plus(lastName),
+        holder.view.setOnClickListener {itemClickListener.onItemClicked(id, firstName.plus(" ").plus(lastName),
             phoneNumber, dob, address, zipcode) }
 
     }
@@ -47,7 +48,7 @@ class ContactAdapter(context: Context, private val contacts: ArrayList<Contacts>
      }
 
     interface ItemClickListener {
-        fun onItemClicked(name: String, phone: String, dob: String, address: String, zipcode: String)
+        fun onItemClicked(id: Int, name: String, phone: String, dob: String, address: String, zipcode: String)
     }
 
 }

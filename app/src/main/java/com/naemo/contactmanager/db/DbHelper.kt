@@ -4,10 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.widget.LinearLayout
+import android.util.Log
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.snackbar.Snackbar
 import com.naemo.contactmanager.db.models.Contacts
 import java.lang.Exception
 
@@ -19,14 +17,14 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         private val DATABASE_NAME = "MyData.db"
         private val DATABASE_VERSION = 1
 
-        val CONTACTS_TABLE_NAME = "Contacts"
-        val COLUMN_CONTACT_ID = "contactid"
-        val COLUMN_CONTACT_FIRSTNAME = "contactfirstname"
-        val COLUMN_CONTACT_LASTNAME = "contactlastname"
-        val COLUMN_CONTACT_PHONENUMBER = "contactphonenumber"
-        val COLUMN_CONTACT_DOB = "contactdob"
-        val COLUMN_CONTACT_ADDRESS = "contactaddress"
-        val COLUMN_CONTACT_ZIPCODE = "contactzipcode"
+        const val CONTACTS_TABLE_NAME = "Contacts"
+        const val COLUMN_CONTACT_ID = "contactid"
+        const val COLUMN_CONTACT_FIRSTNAME = "contactfirstname"
+        const val COLUMN_CONTACT_LASTNAME = "contactlastname"
+        const val COLUMN_CONTACT_PHONENUMBER = "contactphonenumber"
+        const val COLUMN_CONTACT_DOB = "contactdob"
+        const val COLUMN_CONTACT_ADDRESS = "contactaddress"
+        const val COLUMN_CONTACT_ZIPCODE = "contactzipcode"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -74,7 +72,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
                 contacts.add(contact)
                 cursor.moveToNext()
             }
-            Toast.makeText(context, "${cursor.count} records found", Toast.LENGTH_SHORT).show()
+           // Toast.makeText(context, "${cursor.count} records found", Toast.LENGTH_SHORT).show()
         }
         cursor.close()
         db.close()
@@ -98,4 +96,18 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         }
         db.close()
     }
-}
+
+    fun deleteContact(contactId: Int): Boolean {
+        val query = "Delete From $CONTACTS_TABLE_NAME where $COLUMN_CONTACT_ID = $contactId"
+        val db = this.writableDatabase
+        var result = false
+        try {
+            val cursor = db.execSQL(query)
+            result = true
+        } catch (e: Exception) {
+            Log.e(ContentValues.TAG, "Error Deleting")
+        }
+        db.close()
+        return result
+    }
+ }

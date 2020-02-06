@@ -33,10 +33,7 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
 
     var mBinder: ActivityAddBinding? = null
     private var mDatePickerDialog: DatePickerDialog? = null
-    private var listener: DatePickerDialog.OnDateSetListener? = null
     var dob: TextView? = null
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,12 +71,6 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
 
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-    }
-
-
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -106,10 +97,6 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         )
         mDatePickerDialog?.show()
-       // val datePicker: DialogFragment = DatePickerFragment()
-       // var arguments = Bundle()
-       // arguments.putString("year", Calendar.YEAR.toString())
-       // datePicker.show(supportFragmentManager, "date picker")
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -117,12 +104,6 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
         val sum = month + one
         val date = "$dayOfMonth/$sum/$year"
         mBinder?.birthDate?.text = date
-       /* var c: Calendar = Calendar.getInstance()
-        c.set(Calendar.YEAR, year)
-        c.set(Calendar.MONTH, month)
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth)*/
-
-       // var currentDateString: String = DateFormat.getDateInstance().format(c.time)
         dob?.text = date
 
     }
@@ -146,8 +127,6 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
         mBinder?.phoneNumber?.text?.clear()
         mBinder?.address?.text?.clear()
         mBinder?.zipCode?.text?.clear()
-
     }
-
 
 }
