@@ -57,6 +57,7 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
 
     private fun initializeViews() {
         dob = mBinder?.birthDate
+
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -65,7 +66,7 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
         outState.putString("first_name", mBinder?.firstName?.text.toString())
         outState.putString("last_name", mBinder?.lastName?.text.toString())
         outState.putString("phone", mBinder?.phoneNumber?.text.toString())
-        outState.putString("birthday", dob?.text.toString())
+        outState.putString("birthday", dob?.isSaveEnabled?.toString())
         outState.putString("address", mBinder?.address?.text.toString())
         outState.putString("zip_code", mBinder?.zipCode?.text.toString())
 
@@ -110,8 +111,9 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
 
     override fun saveContact() {
         val contact = Contacts()
-        contact.conctactFirstName = mBinder?.firstName?.text.toString()
-        contact.contactLastName = mBinder?.lastName?.text.toString()
+        val first = mBinder?.firstName?.text.toString()
+        val last = mBinder?.lastName?.text.toString()
+        contact.conctactName = first.plus(" ").plus(last)
         contact.contactPhoneNumber = mBinder?.phoneNumber?.text.toString()
         contact.contactDob = mBinder?.birthDate?.text.toString()
         contact.contactAddress = mBinder?.address?.text.toString()

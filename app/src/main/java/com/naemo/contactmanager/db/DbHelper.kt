@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.location.Address
 import android.util.Log
 import android.widget.Toast
 import com.naemo.contactmanager.db.models.Contacts
@@ -19,8 +20,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
 
         const val CONTACTS_TABLE_NAME = "Contacts"
         const val COLUMN_CONTACT_ID = "contactid"
-        const val COLUMN_CONTACT_FIRSTNAME = "contactfirstname"
-        const val COLUMN_CONTACT_LASTNAME = "contactlastname"
+        const val COLUMN_CONTACT_NAME = "contactname"
         const val COLUMN_CONTACT_PHONENUMBER = "contactphonenumber"
         const val COLUMN_CONTACT_DOB = "contactdob"
         const val COLUMN_CONTACT_ADDRESS = "contactaddress"
@@ -30,8 +30,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_CONTACTS_TABLE = ("CREATE TABLE $CONTACTS_TABLE_NAME (" +
                 "$COLUMN_CONTACT_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$COLUMN_CONTACT_FIRSTNAME TEXT," +
-                "$COLUMN_CONTACT_LASTNAME TEXT," +
+                "$COLUMN_CONTACT_NAME TEXT," +
                 "$COLUMN_CONTACT_PHONENUMBER TEXT," +
                 "$COLUMN_CONTACT_DOB TEXT," +
                 "$COLUMN_CONTACT_ADDRESS TEXT," +
@@ -57,10 +56,8 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
             while (!cursor.isAfterLast) {
                 val contact = Contacts()
                 contact.contactId = cursor.getInt(cursor.getColumnIndex(COLUMN_CONTACT_ID))
-                contact.conctactFirstName = cursor.getString(cursor.getColumnIndex(
-                    COLUMN_CONTACT_FIRSTNAME))
-                contact.contactLastName = cursor.getString(cursor.getColumnIndex(
-                    COLUMN_CONTACT_LASTNAME))
+                contact.conctactName = cursor.getString(cursor.getColumnIndex(
+                    COLUMN_CONTACT_NAME))
                 contact.contactPhoneNumber = cursor.getString(cursor.getColumnIndex(
                     COLUMN_CONTACT_PHONENUMBER))
                 contact.contactDob = cursor.getString(cursor.getColumnIndex(
@@ -81,8 +78,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
 
     fun addContact(context: Context, contacts: Contacts) {
         val values = ContentValues()
-        values.put(COLUMN_CONTACT_FIRSTNAME, contacts.conctactFirstName)
-        values.put(COLUMN_CONTACT_LASTNAME, contacts.contactLastName)
+        values.put(COLUMN_CONTACT_NAME, contacts.conctactName)
         values.put(COLUMN_CONTACT_PHONENUMBER, contacts.contactPhoneNumber)
         values.put(COLUMN_CONTACT_DOB, contacts.contactDob)
         values.put(COLUMN_CONTACT_ADDRESS, contacts.contactAddress)
@@ -90,7 +86,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         val db = this.writableDatabase
         try {
             db.insert(CONTACTS_TABLE_NAME, null, values)
-            Toast.makeText(context, "customer added", Toast.LENGTH_SHORT).show() //use snackbar
+            Toast.makeText(context, "contact added", Toast.LENGTH_SHORT).show() //use snackbar
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
         }
@@ -110,4 +106,25 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         db.close()
         return result
     }
+
+    fun updateContact(context: Context, id: String, contactName: String, contactPhone: String, contactDob: String, contactAddress: String, contactZipCode: String): Boolean {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        var result = false
+        contentValues.put(COLUMN_CONTACT_NAME, contactName)
+        contentValues.put(COLUMN_CONTACT_PHONENUMBER, contactPhone)
+        contentValues.put(COLUMN_CONTACT_DOB, contactDob)
+        contentValues.put(COLUMN_CONTACT_ADDRESS, contactAddress)
+        contentValues.put(COLUMN_CONTACT_ZIPCODE, contactZipCode)
+        try {
+            db.update(CONTACTS_TABLE_NAME, contentValues, "$COLUMN_CONTACT_ID = ?", arrayOf(id))
+            result = true
+            Toast.makeText(context, "contact added", Toast.LENGTH_SHORT).show()
+        } catch (e : Exception) {
+            result = false
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        }
+        return result
+    }
+
  }

@@ -30,14 +30,13 @@ class ContactAdapter(context: Context, private val contacts: ArrayList<Contacts>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact: Contacts = contacts[position]
         val id = contact.contactId
-        val firstName = contact.conctactFirstName
-        val lastName = contact.contactLastName
+        val name = contact.conctactName
         val phoneNumber =  contact.contactPhoneNumber
         val dob = contact.contactDob
         val address = contact.contactAddress
         val zipcode = contact.contactZipcode
-        holder.name.text = firstName.plus(" ").plus(lastName)
-        holder.view.setOnClickListener {itemClickListener.onItemClicked(id, firstName.plus(" ").plus(lastName),
+        holder.name.text = name
+        holder.view.setOnClickListener {itemClickListener.onItemClicked(id, name,
             phoneNumber, dob, address, zipcode) }
 
     }

@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:lines="1"
-                android:inputType="number"
+                android:inputType="phone"
                 android:textSize="15sp"
                 android:hint="@string/zip_code_hint" />
         </com.google.android.material.textfield.TextInputLayout>

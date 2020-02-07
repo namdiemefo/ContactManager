@@ -18,27 +18,11 @@ import javax.inject.Inject
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator, ContactAdapter.ItemClickListener {
 
-    override fun onItemClicked(id: Int, name: String, phone: String, dob: String, address: String, zipcode: String) {
-        val intent = Intent(this@HomeActivity, CardActivity::class.java)
-        intent.putExtra("id", id)
-        intent.putExtra("name", name)
-        intent.putExtra("phone", phone)
-        intent.putExtra("dob", dob)
-        intent.putExtra("address", address)
-        intent.putExtra("zipcode", zipcode)
-        this@HomeActivity.startActivity(intent)
-    }
-
-    override fun addContact() {
-        val intent = Intent(this, AddActivity::class.java)
-        startActivity(intent)
-    }
-
     var homeViewModel: HomeViewModel? = null
-    @Inject set
+        @Inject set
 
     var mLayoutId = R.layout.activity_home
-    @Inject set
+        @Inject set
 
     var mBinder: ActivityHomeBinding? = null
     var fabIcon: FloatingActionButton? = null
@@ -54,12 +38,29 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
         viewContacts()
     }
 
+    override fun onItemClicked(id: Int, name: String, phone: String, dob: String, address: String, zipcode: String) {
+        val intent = Intent(this@HomeActivity, CardActivity::class.java)
+        intent.putExtra("id", id)
+        intent.putExtra("name", name)
+        intent.putExtra("phone", phone)
+        intent.putExtra("dob", dob)
+        intent.putExtra("address", address)
+        intent.putExtra("zipcode", zipcode)
+        this@HomeActivity.startActivity(intent)
+    }
+
     private fun viewContacts() {
         val contactList: ArrayList<Contacts> = dbhelper.getContacts(this)
         val adapter = ContactAdapter(this, contactList, this)
         val rv: RecyclerView = mBinder!!.homeRecyclerView
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv.adapter = adapter
+    }
+
+
+    override fun addContact() {
+        val intent = Intent(this, AddActivity::class.java)
+        startActivity(intent)
     }
 
     private fun doBinding() {
