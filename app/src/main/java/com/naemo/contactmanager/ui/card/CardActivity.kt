@@ -14,10 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.naemo.contactmanager.BR
 import com.naemo.contactmanager.R
 import com.naemo.contactmanager.databinding.ActivityCardBinding
+import com.naemo.contactmanager.helpers.SnackBarManager
 import com.naemo.contactmanager.ui.base.BaseActivity
 import com.naemo.contactmanager.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_card.*
-import java.sql.Date
 import java.util.*
 import javax.inject.Inject
 
@@ -75,13 +75,7 @@ import javax.inject.Inject
          full_dob.text = dob
         full_address.setText(address)
         full_zip_code.setText(zipcode)
-
-
     }
-
-     fun updateDob() {
-
-     }
 
      private fun showDatePickerDialog() {
          clickedEdit = true
@@ -122,7 +116,6 @@ import javax.inject.Inject
     }
 
     private fun deleteContact() {
-       // Toast.makeText(this, "delete clicked", Toast.LENGTH_SHORT).show()
         val intent = intent
         val id = intent.getIntExtra("id", 0)
         val name = intent.getStringExtra("name")
@@ -152,7 +145,6 @@ import javax.inject.Inject
 
     @SuppressLint("RestrictedApi")
     private fun editContact() {
-       // Toast.makeText(this, "edit clicked", Toast.LENGTH_SHORT).show()
         clickedEdit = true
         save_icon.visibility = View.VISIBLE
         full_name.isEnabled = true
@@ -165,15 +157,9 @@ import javax.inject.Inject
       override fun updateContact() {
          val intent = intent
          val id = intent.getIntExtra("id", 0)
-         val isUpdate: Boolean = HomeActivity.dbhelper.updateContact(this,
-             id.toString(),
-             full_name.text.toString(),
-             full_number.text.toString(),
-             full_dob.text.toString(),
-             full_address.text.toString(),
-             full_zip_code.text.toString())
+         val isUpdate =  getViewModel()?.update(this, id.toString())
 
-         if (isUpdate) {
+         if (isUpdate!!) {
              super.onBackPressed()
          } else {
              Toast.makeText(this, "error updating", Toast.LENGTH_SHORT).show()
@@ -190,7 +176,7 @@ import javax.inject.Inject
          }
      }
 
-     fun updateDob(view: View) {
+     fun updateDob(view: View?) {
          clickedEdit = true
          showDatePickerDialog()
      }

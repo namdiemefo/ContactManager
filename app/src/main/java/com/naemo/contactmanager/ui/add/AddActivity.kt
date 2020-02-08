@@ -4,26 +4,22 @@ import android.annotation.TargetApi
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.DatePicker
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.naemo.contactmanager.BR
 import com.naemo.contactmanager.R
 import com.naemo.contactmanager.databinding.ActivityAddBinding
-import com.naemo.contactmanager.db.DbHelper
-import com.naemo.contactmanager.db.models.Contacts
-import com.naemo.contactmanager.ui.adapters.ContactAdapter
 import com.naemo.contactmanager.ui.base.BaseActivity
-import com.naemo.contactmanager.ui.helpers.DatePickerFragment
-import com.naemo.contactmanager.ui.home.HomeActivity
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-
 
 class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigator, DatePickerDialog.OnDateSetListener {
+
+    override fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
 
     var addViewModel: AddViewModel? = null
     @Inject set
@@ -31,20 +27,13 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
     var mLayoutId = R.layout.activity_add
     @Inject set
 
-    var mBinder: ActivityAddBinding? = null
+    private var mBinder: ActivityAddBinding? = null
     private var mDatePickerDialog: DatePickerDialog? = null
-    var dob: TextView? = null
+    private var dob: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         doBinding()
-        savedInstanceState?.getString("first_name")
-        savedInstanceState?.getString("last_name")
-        savedInstanceState?.getString("phone")
-        savedInstanceState?.getString("birthday")
-        savedInstanceState?.getString("zip_code")
-        savedInstanceState?.getString("address")
-
     }
 
     private fun doBinding() {
@@ -57,19 +46,6 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
 
     private fun initializeViews() {
         dob = mBinder?.birthDate
-
-    }
-
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
-
-        outState.putString("first_name", mBinder?.firstName?.text.toString())
-        outState.putString("last_name", mBinder?.lastName?.text.toString())
-        outState.putString("phone", mBinder?.phoneNumber?.text.toString())
-        outState.putString("birthday", dob?.isSaveEnabled?.toString())
-        outState.putString("address", mBinder?.address?.text.toString())
-        outState.putString("zip_code", mBinder?.zipCode?.text.toString())
-
     }
 
     override fun getBindingVariable(): Int {
@@ -105,28 +81,18 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
         val sum = month + one
         val date = "$dayOfMonth/$sum/$year"
         mBinder?.birthDate?.text = date
-        dob?.text = date
-
     }
 
     override fun saveContact() {
-        val contact = Contacts()
-        val first = mBinder?.firstName?.text.toString()
-        val last = mBinder?.lastName?.text.toString()
-        contact.conctactName = first.plus(" ").plus(last)
-        contact.contactPhoneNumber = mBinder?.phoneNumber?.text.toString()
-        contact.contactDob = mBinder?.birthDate?.text.toString()
-        contact.contactAddress = mBinder?.address?.text.toString()
-        contact.contactZipcode = mBinder?.zipCode?.text.toString()
-        HomeActivity.dbhelper.addContact(this, contact)
+        getViewModel()?.add(this)
         clearFields()
-        mBinder?.firstName?.requestFocus()
     }
 
     private fun clearFields() {
         mBinder?.firstName?.text?.clear()
         mBinder?.lastName?.text?.clear()
         mBinder?.phoneNumber?.text?.clear()
+        mBinder?.birthDate?.text = ""
         mBinder?.address?.text?.clear()
         mBinder?.zipCode?.text?.clear()
     }

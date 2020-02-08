@@ -38,6 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
+                    android:text="@={viewModel.firstName}"
                     android:lines="1"
                     android:inputType="textPersonName"
                     android:textSize="15sp"
@@ -56,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:lines="1"
+                    android:text="@={viewModel.lastName}"
                     android:inputType="textPersonName"
                     android:textSize="15sp"
                     android:hint="@string/last_name_hint" />
@@ -72,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:lines="1"
+                    android:text="@={viewModel.phoneNumber}"
                     android:inputType="phone"
                     android:textSize="15sp"
                     android:hint="@string/phone_number_hint" />
@@ -94,6 +97,7 @@
                     android:drawableEnd="@drawable/ic_date"
                     android:drawablePadding="5dp"
                     android:imeOptions="actionNext"
+                    android:text="@={viewModel.dob}"
                     android:paddingEnd="20dp"
                     android:paddingStart="4dp"
                     android:hint="@string/birthday_hint" />
@@ -119,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:lines="1"
+                    android:text="@={viewModel.address}"
                     android:inputType="text"
                     android:textSize="15sp"
                     android:hint="@string/address_hint" />
@@ -135,6 +140,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:lines="1"
+                    android:text="@={viewModel.zipCode}"
                     android:inputType="phone"
                     android:textSize="15sp"
                     android:hint="@string/zip_code_hint" />

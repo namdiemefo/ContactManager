@@ -9,13 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity() {
-
-    protected val REQUEST_LOGIN = -1
 
     private var mViewDataBinding: T? = null
     private var mViewModel: V? = null

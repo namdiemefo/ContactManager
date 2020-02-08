@@ -24,8 +24,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNav
     var mLayoutId = R.layout.activity_home
         @Inject set
 
-    var mBinder: ActivityHomeBinding? = null
-    var fabIcon: FloatingActionButton? = null
+    private var mBinder: ActivityHomeBinding? = null
+    private var fabIcon: FloatingActionButton? = null
 
     companion object {
         lateinit var dbhelper: DbHelper

@@ -5,4 +5,7 @@ interface AddNavigator {
     fun datePick()
 
     fun saveContact()
+
+    fun showToast(msg: String)
+
 }

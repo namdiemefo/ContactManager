@@ -4,5 +4,4 @@ interface CardNavigator {
 
     fun updateContact()
 
-   // fun updateDob()
 }
