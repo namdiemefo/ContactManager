@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.location.Address
 import android.util.Log
 import android.widget.Toast
 import com.naemo.contactmanager.db.models.Contacts
@@ -119,7 +118,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         try {
             db.update(CONTACTS_TABLE_NAME, contentValues, "$COLUMN_CONTACT_ID = ?", arrayOf(id))
             result = true
-            Toast.makeText(context, "contact added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "contact updated", Toast.LENGTH_SHORT).show()
         } catch (e : Exception) {
             result = false
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()

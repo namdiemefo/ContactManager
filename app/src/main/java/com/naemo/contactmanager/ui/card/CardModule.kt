@@ -1,7 +1,6 @@
 package com.naemo.contactmanager.ui.card
 
 import com.naemo.contactmanager.R
-import com.naemo.contactmanager.ui.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
 

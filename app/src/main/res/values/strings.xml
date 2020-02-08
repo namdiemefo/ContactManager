@@ -7,4 +7,5 @@
     <string name="birthday_hint">Birthday</string>
     <string name="address_hint">Address</string>
     <string name="zip_code_hint">Zip code</string>
+    <string name="name">Name</string>
 </resources>

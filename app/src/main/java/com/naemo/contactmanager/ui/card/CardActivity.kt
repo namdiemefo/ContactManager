@@ -1,29 +1,29 @@
  package com.naemo.contactmanager.ui.card
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.naemo.contactmanager.BR
-import com.naemo.contactmanager.MainActivity
 import com.naemo.contactmanager.R
 import com.naemo.contactmanager.databinding.ActivityCardBinding
 import com.naemo.contactmanager.ui.base.BaseActivity
 import com.naemo.contactmanager.ui.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_card.*
+import java.sql.Date
+import java.util.*
 import javax.inject.Inject
 
- class CardActivity : BaseActivity<ActivityCardBinding, CardViewModel>(), CardNavigator {
+ class CardActivity : BaseActivity<ActivityCardBinding, CardViewModel>(), CardNavigator, DatePickerDialog.OnDateSetListener {
 
-     var mBinder: ActivityCardBinding? = null
+     private var mBinder: ActivityCardBinding? = null
      var cardViewModel: CardViewModel? = null
      @Inject set
 
@@ -31,8 +31,8 @@ import javax.inject.Inject
      @Inject set
 
      private var clickedEdit: Boolean? = false
-     var drawable: Drawable? = null
-     var fabIcon: FloatingActionButton? = null
+     private var fabIcon: FloatingActionButton? = null
+     private var mDatePickerDialog: DatePickerDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,12 +72,28 @@ import javax.inject.Inject
 
         full_name.setText(name)
         full_number.setText(phone)
-        full_dob.setText(dob)
+         full_dob.text = dob
         full_address.setText(address)
         full_zip_code.setText(zipcode)
 
 
     }
+
+     fun updateDob() {
+
+     }
+
+     private fun showDatePickerDialog() {
+         clickedEdit = true
+         mDatePickerDialog = DatePickerDialog(
+             this,
+             this,
+             Calendar.getInstance().get(Calendar.YEAR),
+             Calendar.getInstance().get(Calendar.MONTH),
+             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+         )
+         mDatePickerDialog?.show()
+     }
 
      override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -126,6 +142,14 @@ import javax.inject.Inject
             .show()
     }
 
+     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+         clickedEdit = true
+         val one = 1
+         val sum = month + one
+         val date = "$dayOfMonth/$sum/$year"
+         mBinder?.fullDob?.text = date
+     }
+
     @SuppressLint("RestrictedApi")
     private fun editContact() {
        // Toast.makeText(this, "edit clicked", Toast.LENGTH_SHORT).show()
@@ -165,4 +189,9 @@ import javax.inject.Inject
              super.onBackPressed()
          }
      }
-}
+
+     fun updateDob(view: View) {
+         clickedEdit = true
+         showDatePickerDialog()
+     }
+ }
