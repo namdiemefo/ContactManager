@@ -6,25 +6,23 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.naemo.contactmanager.BR
 import com.naemo.contactmanager.R
 import com.naemo.contactmanager.databinding.ActivityAddBinding
+import com.naemo.contactmanager.helpers.SnackBarManager
 import com.naemo.contactmanager.ui.base.BaseActivity
 import java.util.*
 import javax.inject.Inject
 
 class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigator, DatePickerDialog.OnDateSetListener {
 
-    override fun showToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-
     var addViewModel: AddViewModel? = null
     @Inject set
 
     var mLayoutId = R.layout.activity_add
+    @Inject set
+
+    var snackBarManager: SnackBarManager? = null
     @Inject set
 
     private var mBinder: ActivityAddBinding? = null
@@ -35,6 +33,7 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
         super.onCreate(savedInstanceState)
         doBinding()
     }
+
 
     private fun doBinding() {
         mBinder = getViewDataBinding()
@@ -64,6 +63,10 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
        showDatePickerDialog()
     }
 
+    override fun showToast(msg: String) {
+        snackBarManager?.showSnackBar(this, mBinder?.addFrame!!, msg)
+    }
+
     @TargetApi(Build.VERSION_CODES.N)
     private fun showDatePickerDialog() {
        mDatePickerDialog = DatePickerDialog(
@@ -85,6 +88,7 @@ class AddActivity : BaseActivity<ActivityAddBinding, AddViewModel>(), AddNavigat
 
     override fun saveContact() {
         getViewModel()?.add(this)
+        snackBarManager?.showSnackBar(this, mBinder?.addFrame!!, "contact added")
         clearFields()
     }
 

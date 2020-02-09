@@ -1,6 +1,7 @@
 package com.naemo.contactmanager.ui.add
 
 import com.naemo.contactmanager.R
+import com.naemo.contactmanager.helpers.SnackBarManager
 import dagger.Module
 import dagger.Provides
 

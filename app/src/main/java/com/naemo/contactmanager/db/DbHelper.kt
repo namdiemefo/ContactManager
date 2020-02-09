@@ -7,16 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import android.widget.Toast
 import com.naemo.contactmanager.db.models.Contacts
+import com.naemo.contactmanager.helpers.SnackBarManager
 import java.lang.Exception
+import javax.inject.Inject
 
 class DbHelper(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) :
 SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
 
+    var snackBarManager: SnackBarManager? = null
+    @Inject set
 
     companion object {
         private val DATABASE_NAME = "MyData.db"
         private val DATABASE_VERSION = 1
-
         const val CONTACTS_TABLE_NAME = "Contacts"
         const val COLUMN_CONTACT_ID = "contactid"
         const val COLUMN_CONTACT_NAME = "contactname"
@@ -68,7 +71,6 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
                 contacts.add(contact)
                 cursor.moveToNext()
             }
-           // Toast.makeText(context, "${cursor.count} records found", Toast.LENGTH_SHORT).show()
         }
         cursor.close()
         db.close()
@@ -85,9 +87,8 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         val db = this.writableDatabase
         try {
             db.insert(CONTACTS_TABLE_NAME, null, values)
-            Toast.makeText(context, "contact added", Toast.LENGTH_SHORT).show() //use snackbar
         } catch (e: Exception) {
-            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            snackBarManager?.showToast(context, e.message!!)
         }
         db.close()
     }
@@ -118,10 +119,10 @@ SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION){
         try {
             db.update(CONTACTS_TABLE_NAME, contentValues, "$COLUMN_CONTACT_ID = ?", arrayOf(id))
             result = true
-            Toast.makeText(context, "contact updated", Toast.LENGTH_SHORT).show()
+            snackBarManager?.showToast(context, "contact updated")
         } catch (e : Exception) {
             result = false
-            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            snackBarManager?.showToast(context, e.message!!)
         }
         return result
     }

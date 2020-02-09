@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.naemo.contactmanager.BR
@@ -28,6 +27,9 @@ import javax.inject.Inject
      @Inject set
 
      var mLayoutId = R.layout.activity_card
+     @Inject set
+
+     var snackBarManager: SnackBarManager? = null
      @Inject set
 
      private var clickedEdit: Boolean? = false
@@ -124,10 +126,10 @@ import javax.inject.Inject
             .setMessage("Are you sure you want to delete $name?")
             .setPositiveButton("Yes") { _, _ ->
                 if (HomeActivity.dbhelper.deleteContact(id)) {
-                    Toast.makeText(this, "contact deleted", Toast.LENGTH_SHORT).show()
+                    snackBarManager?.showToast(this, "contact deleted")
                     super.onBackPressed()
                 } else {
-                    Toast.makeText(this, "error deleting", Toast.LENGTH_SHORT).show()
+                    snackBarManager?.showToast(this, "contact error occurred")
                 }
             }
             .setNegativeButton("No") { _, _ -> }
@@ -161,8 +163,11 @@ import javax.inject.Inject
 
          if (isUpdate!!) {
              super.onBackPressed()
+             snackBarManager?.showToast(this, "contact updated")
+            // snackBarManager?.showSnackBar(this, mBinder?.cardFrame!!, "contact updated" )
          } else {
-             Toast.makeText(this, "error updating", Toast.LENGTH_SHORT).show()
+             snackBarManager?.showToast(this, "error occurred")
+            // snackBarManager?.showSnackBar(this, mBinder?.cardFrame!!, "error occurred" )
          }
 
      }

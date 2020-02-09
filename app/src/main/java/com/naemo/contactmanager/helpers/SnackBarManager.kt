@@ -1,16 +1,18 @@
 package com.naemo.contactmanager.helpers
 
+import android.content.Context
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.IdRes
 import com.google.android.material.snackbar.Snackbar
 
 class SnackBarManager {
 
-/*    @IdRes
-    var id: Int? = null
+    fun showSnackBar(context: Context, view: View, message: String) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .show()
+    }
 
-    fun showSnackBar(@IdRes id: View, message: String) {
-        Snackbar.make(id, message, Snackbar.LENGTH_SHORT).show()
-    }*/
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 }
