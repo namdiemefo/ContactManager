@@ -10,9 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import dagger.android.AndroidInjection
 
-abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatActivity() {
-
-    protected val REQUEST_LOGIN = -1
+abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity() {
 
     private var mViewDataBinding: T? = null
     private var mViewModel: V? = null
@@ -38,10 +36,13 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatA
 
     abstract fun getBindingVariable(): Int
 
+    fun getViewDataBinding() : T? {
+        return mViewDataBinding
+    }
+
     abstract fun getViewModel(): V?
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
+    @LayoutRes abstract fun getLayoutId(): Int
 
     fun performDependencyInjection() {
         AndroidInjection.inject(this)
