@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="navigator"
+            type="com.naemo.contactmanager.ui.add.AddNavigator" />
+
+        <variable
+            name="viewModel"
+            type="com.naemo.contactmanager.ui.add.AddViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/add_frame">
+
+
+        <LinearLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.add.AddActivity">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:text="@={viewModel.firstName}"
+                    android:lines="1"
+                    android:inputType="textPersonName"
+                    android:textSize="15sp"
+                    android:hint="@string/first_name_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:lines="1"
+                    android:text="@={viewModel.lastName}"
+                    android:inputType="textPersonName"
+                    android:textSize="15sp"
+                    android:hint="@string/last_name_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:lines="1"
+                    android:text="@={viewModel.phoneNumber}"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:hint="@string/phone_number_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="5dp"
+                android:id="@+id/dob_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/birthday_hint">
+
+                <TextView
+                    android:id="@+id/birth_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{(view) -> navigator.datePick()}"
+                    android:textSize="15sp"
+                    android:paddingTop="10dp"
+                    android:drawableEnd="@drawable/ic_date"
+                    android:drawablePadding="5dp"
+                    android:imeOptions="actionNext"
+                    android:text="@={viewModel.dob}"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="4dp"
+                    android:hint="@string/birthday_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="5dp"
+                android:background="@android:color/background_dark"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:lines="1"
+                    android:text="@={viewModel.address}"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:hint="@string/address_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/zip_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:lines="1"
+                    android:text="@={viewModel.zipCode}"
+                    android:inputType="phone"
+                    android:textSize="15sp"
+                    android:hint="@string/zip_code_hint" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="71dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:clickable="true"
+                android:background="@color/colorAccent"
+                android:onClick="@{(view) -> navigator.saveContact()}"
+                app:srcCompat="@drawable/ic_done_white"
+                android:focusable="true" />
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

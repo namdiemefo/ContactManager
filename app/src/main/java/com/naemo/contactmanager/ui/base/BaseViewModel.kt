@@ -9,7 +9,7 @@ open class BaseViewModel<N> : ViewModel() {
         return navigator
     }
 
-    fun setNavigator(navigator: N) {
+    open fun setNavigator(navigator: N) {
         this.navigator = navigator
     }
 }
